@@ -1,0 +1,108 @@
+//===============================================//
+//  Name:        Aidan Gadberry                  //
+//  User ID:     agadberr                        //
+//  Date:        6/3/2015                        //
+//  Program:     Programming Assignment 4        //
+//===============================================//
+
+PROGRAM DESCRIPTION:
+
+This program is an add-on to Programming Assignment 2, altering the IntList 
+ADT to an EdgeList ADT. This program implements both Prim's and Djikstra's
+algorithms.
+
+TESTFILES:
+
+Testfile test01.txt tests the ability of the program to handle multiple
+stores of intList elements to various indecies, as well as its ability
+to properly format the output (including commas between multiple values,
+but not before the end bracket)
+
+Desired output of test01.txt: 
+
+ORIGINAL			TRANSPOSE			CYCLE
+
+n = 8				n = 8				There are two cycles in this graph,
+m = 7				m = 7				a 1-length cycle from 4 to 4, and
+1	[2, 3]			1	null			another 1-length cycle from 7 to 7.
+2	null			2	[6, 1]			It should print that there exists
+3	null			3	[1]				a cycle, and that either 4 or 7 is
+4	[4]				4	[4]				a vertex in that cycle. It should 
+5	null			5	[7, 7]			also return either 4 or 7
+6	[2]				6	null
+7	[5, 7, 5]		7	[7]
+8	null			8	null
+
+Testfile test02.txt tests to make sure program doesn't crash when the
+index of an element is given that is out of the array boundaries defined
+by n in line 1 of the text file, and doesn't increment m if the vertex or
+edge is out of bounds. It also tests that errors are correctly printed
+when there are vertices or edges greater than n
+
+Desired output of test02.txt:
+
+ORIGINAL			TRANSPOSE			CYCLE
+					
+n = 4				n = 4				There is one cycle in this graph, a
+m = 3				m = 3				1-length cycle from 1 to 1. It 
+1	[1]				1	[1]				should print that there exists a 
+2	null			2	[3]				cycle, and that 1 is a vertex in
+3	[2]				3	[4]				that cycle. It should also return 1
+4	[3]				4	null
+
+Testfile test03.txt tests what happens to the program when there are no
+cycles in the given graph, making sure that it properly returns no valid
+vertex and prints the correct message
+
+ORIGINAL			TRANSPOSE			CYCLE
+
+n = 5				n = 5				There are no cycles in this graph.
+m = 5				m = 5				It should print that there are no
+1	[4]				1	[3]				cycles in the graph. It should also
+2 	null			2	[5, 3]			return 0
+3	[1, 2]			3	null
+4	[5]				4	[1]
+5	[2]				5	[4]
+
+Testfile test04.txt was my attempt to get the hasCycle function to print
+a vertex that was incorrectly labeled as a vertex within the cycle. The
+goal was to get the hasCycleLen function into a cycle, and after the first
+time around the cycle (1 to 2 to 3), it would go from 3 to 4, and then to 5
+which would make sofar = n, and then return 5. However, the reason it did 
+not work was because before it found the 1-2-3-1 cycle, it traversed down 
+the 1-2-3-4-5 path, which returned 0, and removed 4 from vertex 3's 
+adjacency list due to the function intRest. Since 4 was removed, it was 
+unable to reach vertex 4 after going around the cycle one time. Since this
+is the functionality of the hasCycleLen function, I believe that it is
+impossible for my program to return a vertex that is not within a cycle of
+the given graph
+
+ORIGINAL			TRANSPOSE 			CYCLE
+
+n = 8				n = 8				There is one cycle in this graph, a
+m = 5				m = 5				3-length cycle from 1 to 2 to 3 to
+1 	[2]				1 	[3]				1. It should print that there
+2 	[3]				2 	[1]				exists a cycle, and that either 1, 
+3	[4, 1]			3	[2]				2, or 3 is a vertex in that cycle.
+4	[5]				4	[3]				It should also return either 1, 2, 
+5	null			5	[4]				or 3
+6	null			6	null
+7	null			7	null
+8	null			8	null
+
+Testfile gr02_test0.in is the given test file in the AppendixCode folder
+
+Desired output of gr02_test0.in:
+
+ORIGINAL 			TRANSPOSE 			CYCLE
+
+n = 8				n = 8				There is one cycle in this graph, a
+m = 6				m = 6				4-length cycle from 2 to 3 to 4 to
+1	[2]				1 	[6]				5 to 2. It should print that there
+2	[3]				2 	[5, 1]			exists a cycle, and that either 2, 
+3	[4]				3 	[2]				3, 4, or 5 is a vertex in that 
+4	[5]				4 	[3]				cycle. It should also return either
+5	[2]				5 	[4]				2, 3, 4, or 5
+6	[1]				6	null
+7	null			7	null
+8	null			8	null
